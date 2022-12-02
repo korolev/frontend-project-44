@@ -1,6 +1,6 @@
 {
   "name": "@hexlet/code",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "[![Actions Status](https://github.com/korolev/frontend-project-44/workflows/hexlet-check/badge.svg)](https://github.com/korolev/frontend-project-44/actions)",
   "type": "module",
   "main": "index.js",
@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/korolev/frontend-project-44/issues"
   },
-  "homepage": "https://github.com/korolev/frontend-project-44#readme"
+  "homepage": "https://github.com/korolev/frontend-project-44#readme",
+  "dependencies": {
+    "readline-sync": "^1.4.10"
+  }
 }
