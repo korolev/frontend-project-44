@@ -15,7 +15,33 @@ export const getRandomArrayValue = (arr) => {
   return arr[rendomIdx];
 };
 
+export const greatestCommonDivisor = (a, b) => {
+  if ((typeof a !== 'number') || (typeof b !== 'number')) {
+    return false;
+  }
+
+  let x = Math.abs(a);
+  let y = Math.abs(b);
+
+  while (y) {
+    const tmp = y;
+    y = x % y;
+    x = tmp;
+  }
+
+  return x;
+};
+
 export const isEven = (n) => Number(n) % 2 === 0;
+
+export const isPrime = (num) => {
+  for (let i = 2, s = Math.sqrt(num); i <= s; i += 1) {
+    if (num % i === 0) {
+      return false;
+    }
+  }
+  return num > 1;
+};
 
 export const add = (a, b) => Number(a) + Number(b);
 

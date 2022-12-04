@@ -1,21 +1,16 @@
 import { print, readline } from '../cli.js';
 import { runGame } from '../index.js';
-import {
-  mult, subtract, add, getRandomArrayValue, getRandomInt,
-} from '../utils.js';
+import { getRandomInt, getRandomArrayValue } from '../utils.js';
 
 // Game mechanic constants
-const OPERATORS = {
-  add: '+',
-  subtract: '-',
-  mult: '*',
-};
 const INTERVAL_FROM = 1;
-const INTERVAL_TO = 50;
+const INTERVAL_TO = 25;
+const PROGRESSION_MIN_LEN = 5;
+const PROGRESSION_MAX_LEN = 15;
 
 // UI Constants
+const DESCRIPTION = 'What number is missing in the progression?';
 const RIGHT_ANSWER_MSG = 'Correct!';
-const DESCRIPTION = 'What is the result of the expression?';
 
 const printGameOverMessage = (question, userAnswer, rightAnswer, userName) => print(`
 Question: ${question}
@@ -24,29 +19,29 @@ Your answer: ${userAnswer}
 Let's try again, ${userName}!
 `);
 
-const calc = (operator, a, b) => {
-  switch (operator) {
-    case OPERATORS.add:
-      return add(a, b);
-    case OPERATORS.subtract:
-      return subtract(a, b);
-    case OPERATORS.mult:
-      return mult(a, b);
-    default:
-      return 0;
+const generateProgression = (start, step, len) => {
+  const res = [];
+
+  let val = start;
+  for (let i = 0; i < len; i += 1) {
+    res[i] = val;
+    val += step;
   }
+
+  return res;
 };
 
 const playRound = (userName) => {
-  const firstInt = getRandomInt(INTERVAL_FROM, INTERVAL_TO);
-  const secondInt = getRandomInt(INTERVAL_FROM, INTERVAL_TO);
-  const randomOperation = getRandomArrayValue(Object.values(OPERATORS));
-  const question = `${firstInt} ${randomOperation} ${secondInt}`;
+  const start = getRandomInt(INTERVAL_FROM, INTERVAL_TO);
+  const step = getRandomInt(INTERVAL_FROM, INTERVAL_TO);
+  const len = getRandomInt(PROGRESSION_MIN_LEN, PROGRESSION_MAX_LEN);
+  const progression = generateProgression(start, step, len);
+  const rightAnswer = getRandomArrayValue(progression);
+  const question = progression.map((n) => (n === rightAnswer ? '..' : n)).join(' ');
 
   print(`Question: ${question}`);
 
   const userAnswer = readline('Your answer: ');
-  const rightAnswer = calc(randomOperation, firstInt, secondInt);
 
   if (Number(userAnswer) === rightAnswer) {
     print(RIGHT_ANSWER_MSG);
